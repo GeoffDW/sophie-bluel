@@ -47,6 +47,42 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
+
+.mode-edition {
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    width: 120%;
+    position: relative;
+	right: 85px;
+    color: white;
+    height: 60px;
+    align-items: center;
+}
+
+.mode-edition i {
+	position: absolute;
+	margin-right: 120px;
+	color: white;
+}
+
+.btn-modifier {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn-modifier h2 {
+	margin-right: 30px;
+}
+
+.btn-modifier i, p {
+	margin-bottom: 26px;
+	padding: 4px;
+	font-size: 16px;
+}
+
+
 body {
 	max-width: 1140px;
 	margin:auto;
