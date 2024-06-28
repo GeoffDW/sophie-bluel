@@ -11,8 +11,6 @@ const password = document.querySelector('#password');
 
 const error = document.querySelector('#error')
 
-console.log("password")
-
 
 // ********** VARIABLES *********** //
 
