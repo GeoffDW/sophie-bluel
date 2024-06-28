@@ -3,6 +3,7 @@
 // ********** CONSTANTS *********** //
 
 const gallery = document.querySelector(".gallery");
+const figure = document.querySelectorAll("figure")
 
 const dialog = document.querySelector("dialog");
 const button = document.querySelector(".mes-projets button");
