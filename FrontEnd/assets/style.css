@@ -78,6 +78,8 @@ table {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: auto;
+    padding-top: 60px;
 }
 
 .mes-projets h2 {
@@ -91,6 +93,8 @@ table {
 	font-size: 16px;
 	color: black;
 	text-decoration: none;
+	background-color: white;
+	border: none;
 }
 
 .btn-modifier {
@@ -152,7 +156,29 @@ dialog.active {
 	text-decoration: none;
 }
 
+.filters {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: baseline;
+	gap: 8px;
+}
 
+.btn-filters {
+	border-radius: 60px;
+	border: 1px solid #1D6154;
+	background-color: #ffff;
+	font-size: 0.875rem;
+	color: #1D6154;
+	font-family: syne;
+	padding: 9px 15px 9px 15px;
+}
+
+.btn-filters:hover {
+background-color: #1D6154;
+color: #ffff;
+outline: none;
+}
 
 body {
 	max-width: 1140px;

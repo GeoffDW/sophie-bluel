@@ -9,6 +9,7 @@ const button = document.querySelector(".mes-projets button");
 const showButton = document.querySelector("dialog + .mes-projets button");
 const closeButton = document.querySelector("dialog button");
 const projetsGallery = document.querySelector(".gallery");
+const classFiltre = document.querySelector('.filters')
 
 // ********** VARIABLES *********** //
 
@@ -52,9 +53,24 @@ function genererWorks(works) {
     projetsGallery.appendChild(galleryElement)
     galleryElement.appendChild(imageProjet)
     galleryElement.appendChild(titleProjet)
-
   }
 }
+
+function genererCategories(categories) {
+  for (let i = 0; i < categories.length; i++) {
+  const button = categories[i]
+
+  const btnFiltrer = document.createElement('button');
+
+  const nomFiltre = document.createElement('h2');
+  nomFiltre.innerText = button.name;
+  nomFiltre.classList.add("btn-filters");
+
+  classFiltre.appendChild(btnFiltrer)
+  btnFiltrer.appendChild(nomFiltre)
+}}
+
+
 
 /**
  * Toggles the visibility of a modal dialog.
@@ -79,6 +95,7 @@ const init = async () => {
 await fetchData("categories");
 await fetchData("works");
 genererWorks(works);
+genererCategories(categories)
 toggleModal();
 }
 
