@@ -4,21 +4,16 @@
 
 const URL = "http://localhost:5678/api/";
 
-const gallery = document.querySelector(".gallery");
 const dialog = document.querySelector("dialog");
 const button = document.querySelector(".mes-projets button");
 const showButton = document.querySelector("dialog + .mes-projets button");
 const closeButton = document.querySelector("dialog button");
-
-
-
+const projetsGallery = document.querySelector(".gallery");
 
 // ********** VARIABLES *********** //
 
 let works;
 let categories;
-
-
 
 // ********** FUNCTIONS *********** //
 
@@ -31,12 +26,34 @@ let categories;
 const fetchData = async (type) => {
   const response = await fetch(URL + type);
 
-  type === "works" ? 
-  works = await response.json() : 
-  categories = await response.json();
+  if (type === "works") {
+    works = await response.json();
+  } else {
+    categories = await response.json();
+  }
 
   console.log(typeof works, works);
   console.log(typeof categories, categories);
+}
+
+function genererWorks(works) {
+  for (let i = 0; i < works.length; i++) {
+    const figure = works[i];
+
+    const galleryElement = document.createElement("figure");
+
+    const titleProjet = document.createElement("figcaption");
+    titleProjet.innerText = figure.title;
+
+    const imageProjet = document.createElement("img");
+    imageProjet.src = figure.imageUrl;
+
+
+    projetsGallery.appendChild(galleryElement)
+    galleryElement.appendChild(imageProjet)
+    galleryElement.appendChild(titleProjet)
+
+  }
 }
 
 /**
@@ -58,9 +75,11 @@ const toggleModal = () => {
 
 // ********** MAIN *********** //
 
-fetchData("categories");
-fetchData("works");
+const init = async () => {
+await fetchData("categories");
+await fetchData("works");
+genererWorks(works);
 toggleModal();
+}
 
-
-
+init();
