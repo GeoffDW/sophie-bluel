@@ -176,6 +176,10 @@ dialog.active {
 	transition: 0.3s;
 }
 
+figure img {
+	transition: 1s 1s ease-in-out;
+}
+
 .btn-filters:hover {
 background-color: #1D6154;
 color: #ffff;

@@ -60,6 +60,14 @@ function genererWorks(works) {
 // Affichage categories //
 
 function genererCategories(categories) {
+  const allButton = document.createElement('button');
+  allButton.innerText = "Tous";
+  allButton.classList.add("btn-filters");
+  allButton.addEventListener('click', () => {
+    genererWorks(works); // Show all works
+  });
+  classFiltre.appendChild(allButton);
+
   for (let i = 0; i < categories.length; i++) {
     const category = categories[i];
 
