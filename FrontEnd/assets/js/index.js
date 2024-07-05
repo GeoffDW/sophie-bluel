@@ -18,7 +18,6 @@ let categories;
 
 // ********** FUNCTIONS *********** //
 
-
 /**
  * Fetches data based on the type provided and assigns it to either works or categories.
  *
@@ -37,7 +36,10 @@ const fetchData = async (type) => {
   console.log(typeof categories, categories);
 }
 
+// Affichage projets //
+
 function genererWorks(works) {
+  projetsGallery.innerHTML = ''; // Clear existing works
   for (let i = 0; i < works.length; i++) {
     const figure = works[i];
 
@@ -49,34 +51,41 @@ function genererWorks(works) {
     const imageProjet = document.createElement("img");
     imageProjet.src = figure.imageUrl;
 
-
     projetsGallery.appendChild(galleryElement)
     galleryElement.appendChild(imageProjet)
     galleryElement.appendChild(titleProjet)
   }
 }
 
+// Affichage categories //
+
 function genererCategories(categories) {
   for (let i = 0; i < categories.length; i++) {
-  const button = categories[i]
+    const category = categories[i];
 
-  const btnFiltrer = document.createElement('button');
+    const btnFiltrer = document.createElement('button');
+    btnFiltrer.innerText = category.name;
+    btnFiltrer.classList.add("btn-filters");
 
-  const nomFiltre = document.createElement('h2');
-  nomFiltre.innerText = button.name;
-  nomFiltre.classList.add("btn-filters");
+    // Add event listener to filter buttons
+    btnFiltrer.addEventListener('click', () => {
+      filterWorks(category.id);
+    });
 
-  classFiltre.appendChild(btnFiltrer)
-  btnFiltrer.appendChild(nomFiltre)
-}}
+    classFiltre.appendChild(btnFiltrer);
+  }
+}
 
-
+// Filtrer les projets par catégorie
+function filterWorks(categoryId) {
+  const filteredWorks = works.filter(work => work.categoryId === categoryId);
+  genererWorks(filteredWorks);
+}
 
 /**
  * Toggles the visibility of a modal dialog.
  */
 const toggleModal = () => {
-
   showButton.addEventListener("click", () => {
     dialog.showModal();
     dialog.classList.toggle("active");
@@ -88,15 +97,14 @@ const toggleModal = () => {
   });
 }
 
-
 // ********** MAIN *********** //
 
 const init = async () => {
-await fetchData("categories");
-await fetchData("works");
-genererWorks(works);
-genererCategories(categories)
-toggleModal();
+  await fetchData("categories");
+  await fetchData("works");
+  genererWorks(works);
+  genererCategories(categories);
+  toggleModal();
 }
 
 init();

@@ -172,6 +172,8 @@ dialog.active {
 	color: #1D6154;
 	font-family: syne;
 	padding: 9px 15px 9px 15px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .btn-filters:hover {
