@@ -31,24 +31,21 @@ const fetchData = async (type) => {
   } else {
     categories = await response.json();
   }
-
-  console.log(typeof works, works);
-  console.log(typeof categories, categories);
 }
 
 // Affichage projets //
 
-function genererWorks(works) {
+const generateWorks = (works) => {
   projetsGallery.innerHTML = ''; // Clear existing works
+
   for (let i = 0; i < works.length; i++) {
     const figure = works[i];
 
     const galleryElement = document.createElement("figure");
-
     const titleProjet = document.createElement("figcaption");
-    titleProjet.innerText = figure.title;
-
     const imageProjet = document.createElement("img");
+
+    titleProjet.innerText = figure.title;
     imageProjet.src = figure.imageUrl;
 
     projetsGallery.appendChild(galleryElement)
@@ -59,19 +56,23 @@ function genererWorks(works) {
 
 // Affichage categories //
 
-function genererCategories(categories) {
+const generateCategories = (categories) => {
   const allButton = document.createElement('button');
+
   allButton.innerText = "Tous";
   allButton.classList.add("btn-filters");
+
   allButton.addEventListener('click', () => {
-    genererWorks(works); // Show all works
+    generateWorks(works); 
   });
+
   classFiltre.appendChild(allButton);
 
   for (let i = 0; i < categories.length; i++) {
     const category = categories[i];
 
     const btnFiltrer = document.createElement('button');
+
     btnFiltrer.innerText = category.name;
     btnFiltrer.classList.add("btn-filters");
 
@@ -83,11 +84,14 @@ function genererCategories(categories) {
     classFiltre.appendChild(btnFiltrer);
   }
 }
-
-// Filtrer les projets par catégorie
-function filterWorks(categoryId) {
+/**
+ * Filtre les œuvres en fonction de l'ID de catégorie donné et génère les œuvres filtrées.
+ *
+ * @param {number} categoryId - L'ID de la catégorie pour filtrer les œuvres.
+ */
+const filterWorks = (categoryId) => {
   const filteredWorks = works.filter(work => work.categoryId === categoryId);
-  genererWorks(filteredWorks);
+  generateWorks(filteredWorks);
 }
 
 /**
@@ -105,14 +109,17 @@ const toggleModal = () => {
   });
 }
 
-// ********** MAIN *********** //
-
 const init = async () => {
   await fetchData("categories");
   await fetchData("works");
-  genererWorks(works);
-  genererCategories(categories);
+
+  generateWorks(works);
+  generateCategories(categories);
+
   toggleModal();
 }
+
+
+// ********** MAIN *********** //
 
 init();

@@ -3,19 +3,87 @@
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -23,43 +91,63 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
-ol, ul {
+
+ol,
+ul {
 	list-style: none;
 }
-blockquote, q {
+
+blockquote,
+q {
 	quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 /** end reset css**/
 
 /** mode edition **/
 
 .mode-edition {
-    display: flex;
-    justify-content: center;
-    background-color: black;
-    width: 130%;
-    position: relative;
+	display: flex;
+	justify-content: center;
+	background-color: black;
+	width: 130%;
+	position: relative;
 	right: 189px;
-    color: white;
-    height: 50px;
-    align-items: center;
+	color: white;
+	height: 50px;
+	align-items: center;
 }
 
 .mode-edition i {
@@ -79,7 +167,7 @@ table {
 	justify-content: center;
 	align-items: center;
 	margin-bottom: auto;
-    padding-top: 60px;
+	padding-top: 60px;
 }
 
 .mes-projets h2 {
@@ -87,7 +175,8 @@ table {
 	padding-right: 20px;
 }
 
-.mes-projets i, button {
+.mes-projets i,
+button {
 	margin-bottom: 26px;
 	padding: 4px;
 	font-size: 16px;
@@ -181,27 +270,29 @@ figure img {
 }
 
 .btn-filters:hover {
-background-color: #1D6154;
-color: #ffff;
-outline: none;
+	background-color: #1D6154;
+	color: #ffff;
+	outline: none;
 }
 
 body {
 	max-width: 1140px;
-	margin:auto;
-	font-family: 'Work Sans' ;
+	margin: auto;
+	font-family: 'Work Sans';
 	font-size: 14px;
 }
+
 header {
 	display: flex;
 	justify-content: space-between;
 	margin: 50px 0
 }
+
 section {
 	margin: 50px 0
 }
 
-h1{
+h1 {
 	display: flex;
 	flex-direction: column;
 	font-family: 'Syne';
@@ -210,40 +301,51 @@ h1{
 	color: #B1663C
 }
 
-h1 > span {
+h1>span {
 	font-family: 'Work Sans';
-	font-size:10px;
+	font-size: 10px;
 	letter-spacing: 0.1em;
-;
+	;
 }
 
-h2{
+h2 {
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
+	display: flex;
+	justify-content: center;
 }
+
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
 }
+
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	text-decoration: none;
+}
+
+nav a {
+	text-decoration: none;
 }
 
 li:hover {
 	color: #B1663C;
 }
+
 #introduction {
 	display: flex;
 	align-items: center;
 }
+
 #introduction figure {
 	flex: 1
 }
+
 #introduction img {
 	display: block;
 	margin: auto;
@@ -253,6 +355,7 @@ li:hover {
 #introduction article {
 	flex: 1
 }
+
 #introduction h2 {
 	margin-bottom: 1em;
 }
@@ -260,36 +363,99 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
 .gallery {
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
+	transition: 1s;
 }
 
 .gallery img {
 	width: 100%;
-
+	transition: 1s;
 }
+
+.login form input {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		gap: 15px;
+		width: 350px;
+		margin: auto;
+		height: 50px;
+		font-size: 1.2em;
+		border: none;
+		box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.login h2 {
+	margin-bottom: 70px;
+}
+
+.login label {
+	display: flex;
+	justify-content: center;
+	margin: 2em 14.5em 0.5em 0;
+	font-size: 1.2em;
+}
+
+.login label[for="email"] {
+	margin-right: 40px;
+	margin: 2em 18em 0.5em 0;
+}
+
+.login button {
+	display: flex;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin: 2em auto;
+	padding: 12px;
+	padding-left: 35px;
+	width: 190px;
+	text-align: center;
+	border-radius: 60px;
+	margin-top: 50px;
+}
+
+.login a {
+	display: flex;
+	justify-content: center;
+	font-size: 1.2em;
+}
+
+footer p {
+	display: flex;
+	justify-content: flex-end;
+	font-size: 1.2em;
+	margin-top: 190px;
+}
+
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
-#contact > * {
-	text-align: center;
 
+#contact>* {
+	text-align: center;
 }
-#contact h2{
+
+#contact h2 {
 	margin-bottom: 20px;
 }
+
 #contact form {
 	text-align: left;
-	margin-top:30px;
+	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 }
@@ -300,23 +466,25 @@ margin: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 #contact label {
 	margin: 2em 0 1em 0;
 }
+
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"]{
+input[type="submit"] {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
-	margin : 2em auto ;
+	margin: 2em auto;
 	width: 180px;
 	text-align: center;
-	border-radius: 60px ;
+	border-radius: 60px;
 }
 
 footer nav ul {
@@ -324,4 +492,3 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
-
