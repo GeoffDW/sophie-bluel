@@ -5,18 +5,23 @@
 const URL = "http://localhost:5678/api/";
 
 const dialog = document.querySelector("dialog");
+const editMode = document.querySelector('.mode-edition');
+const editBtn = document.querySelector('.btn-modifier');
+const loginBtn = document.querySelector('#login');
+const logoutBtn = document.querySelector('#logout');
 const button = document.querySelector(".mes-projets button");
 const showButton = document.querySelector("dialog + .mes-projets button");
 const closeButton = document.querySelector("dialog button");
 const projetsGallery = document.querySelector(".gallery");
-const classFiltre = document.querySelector('.filters')
+const classFiltre = document.querySelector('.filters');
+
 
 // ********** VARIABLES *********** //
 
 let works;
 let categories;
 
-// ********** FUNCTIONS *********** //
+// ***************** FUNCTIONS ****************** //
 
 /**
  * Fetches data based on the type provided and assigns it to either works or categories.
@@ -33,7 +38,7 @@ const fetchData = async (type) => {
   }
 }
 
-// Affichage projets //
+// ********* AFFICHAGE POROJETS  ********* //
 
 const generateWorks = (works) => {
   projetsGallery.innerHTML = ''; // Clear existing works
@@ -54,7 +59,7 @@ const generateWorks = (works) => {
   }
 }
 
-// Affichage categories //
+// ********* AFFICHAGE CATEGORIE ******** //
 
 const generateCategories = (categories) => {
   const allButton = document.createElement('button');
@@ -94,6 +99,36 @@ const filterWorks = (categoryId) => {
   generateWorks(filteredWorks);
 }
 
+// ******** LOGIN - LOGOUT  ******** //
+
+const displayAdmin = () => {
+  if (localStorage.getItem("token")) {
+    editMode.classList.remove("hide");
+    editBtn.classList.remove("hide");
+    classFiltre.classList.add("hide");
+    
+    loginBtn.classList.add("hide");
+    logoutBtn.classList.remove("hide");
+  } else {
+    editMode.classList.add("hide");
+    editBtn.classList.add("hide");
+    classFiltre.classList.remove("hide");
+
+    loginBtn.classList.remove("hide");
+    logoutBtn.classList.add("hide");
+  }
+};
+
+const logout = () => {
+  localStorage.removeItem("token");
+  displayAdmin()
+  location.reload()
+}
+
+logoutBtn.addEventListener("click", logout);
+
+// ******** MODALS ********* //
+
 /**
  * Toggles the visibility of a modal dialog.
  */
@@ -115,7 +150,7 @@ const init = async () => {
 
   generateWorks(works);
   generateCategories(categories);
-
+  displayAdmin()
   toggleModal();
 }
 

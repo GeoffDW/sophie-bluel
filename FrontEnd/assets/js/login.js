@@ -24,6 +24,7 @@ const error = document.querySelector('#error');
  * Si la requête a échoué, la fonction lève une erreur avec le message "Identifiant ou mot de passe incorrect" (signifiant "Identifiant ou mot de passe incorrect").
  */
 const login = async () => {
+    console.log('hello login')
     // Créer un objet options avec la méthode de requête, les en-têtes et le corps
     const options = {
         method: "POST", 
@@ -34,16 +35,13 @@ const login = async () => {
         })
     };
 
-    console.log(options)
     // Envoyer une requête au serveur et afficher la réponse dans la console
     const response = await fetch(URL, options);
-    console.log(response)
 
     // Si la requête a réussi, extraire le jeton de la réponse et l'enregistrer dans le stockage local
     if (response.ok) {
-        const data = response.json();
+        const data = await response.json();
         const token = data.token;
-        console.log(token)
 
         localStorage.setItem("token", token);
         document.location.href = "index.html";

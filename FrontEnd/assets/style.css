@@ -150,6 +150,7 @@ table {
 	align-items: center;
 }
 
+
 .mode-edition i {
 	position: absolute;
 	margin-right: 60px;
@@ -191,6 +192,7 @@ button {
 	background-color: white;
 	font-size: 1em;
 	cursor: pointer;
+	margin-bottom: 0;
 
 }
 
@@ -331,6 +333,8 @@ nav li {
 
 nav a {
 	text-decoration: none;
+	color: black;
+	gap: 20px;
 }
 
 li:hover {
@@ -491,4 +495,8 @@ footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
+}
+
+.hide {
+	display: none;
 }
