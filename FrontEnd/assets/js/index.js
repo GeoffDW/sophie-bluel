@@ -12,8 +12,10 @@ const logoutBtn = document.querySelector('#logout');
 const button = document.querySelector(".mes-projets button");
 const showButton = document.querySelector("dialog + .mes-projets button");
 const closeButton = document.querySelector("dialog button");
+const addButton = document.querySelector(".btn-add");
 const projetsGallery = document.querySelector(".gallery");
-const classFiltre = document.querySelector('.filters');
+const classFilters = document.querySelector('.filters');
+const modalGallery = document.getElementById("modal-gallery");
 
 
 // ********** VARIABLES *********** //
@@ -24,9 +26,8 @@ let categories;
 // ***************** FUNCTIONS ****************** //
 
 /**
- * Fetches data based on the type provided and assigns it to either works or categories.
- *
- * @param {string} type - The type of data to fetch.
+Ce code définit une fonction appelée fetchData qui récupère des données en fonction du type fourni. Si le type est "works", il assigne les données récupérées à la variable works, sinon à la variable categories. Il utilise l'API fetch pour faire une requête réseau et await pour gérer la réponse de manière asynchrone
+* @param {string} type - The type of data to fetch.
  */
 const fetchData = async (type) => {
   const response = await fetch(URL + type);
@@ -38,7 +39,7 @@ const fetchData = async (type) => {
   }
 }
 
-// ********* AFFICHAGE POROJETS  ********* //
+// ********* AFFICHAGE PROJETS  ********* //
 
 const generateWorks = (works) => {
   projetsGallery.innerHTML = ''; // Clear existing works
@@ -71,7 +72,7 @@ const generateCategories = (categories) => {
     generateWorks(works); 
   });
 
-  classFiltre.appendChild(allButton);
+  classFilters.appendChild(allButton);
 
   for (let i = 0; i < categories.length; i++) {
     const category = categories[i];
@@ -86,7 +87,7 @@ const generateCategories = (categories) => {
       filterWorks(category.id);
     });
 
-    classFiltre.appendChild(btnFiltrer);
+    classFilters.appendChild(btnFiltrer);
   }
 }
 /**
@@ -105,14 +106,14 @@ const displayAdmin = () => {
   if (localStorage.getItem("token")) {
     editMode.classList.remove("hide");
     editBtn.classList.remove("hide");
-    classFiltre.classList.add("hide");
+    classFilters.classList.add("hide");
     
     loginBtn.classList.add("hide");
     logoutBtn.classList.remove("hide");
   } else {
     editMode.classList.add("hide");
     editBtn.classList.add("hide");
-    classFiltre.classList.remove("hide");
+    classFilters.classList.remove("hide");
 
     loginBtn.classList.remove("hide");
     logoutBtn.classList.add("hide");
@@ -136,6 +137,7 @@ const toggleModal = () => {
   showButton.addEventListener("click", () => {
     dialog.showModal();
     dialog.classList.toggle("active");
+    generateModalGallery(works);
   });
 
   closeButton.addEventListener("click", () => {
@@ -143,6 +145,27 @@ const toggleModal = () => {
     dialog.classList.toggle("active");
   });
 }
+
+const generateModalGallery = (works) => {
+  modalGallery.innerHTML = ''; // Clear existing works
+
+  for (let i = 0; i < works.length; i++) {
+    const figure = works[i];
+
+    const galleryElement = document.createElement("figure");
+    galleryElement.classList.add("gallery-item");
+    galleryElement.innerHTML = `<img src="${figure.imageUrl}" alt="${figure.title}"> 
+    <button class="btn-delete" data-id="${figure.id}"><i class="fa-solid fa-trash-can"></i></button>`;
+
+    modalGallery.appendChild(galleryElement);
+
+    galleryElement.querySelector('.btn-delete').addEventListener('click', () => {
+      deleteWork(figure.id);
+
+    });
+  }
+}
+
 
 const init = async () => {
   await fetchData("categories");

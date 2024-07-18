@@ -199,8 +199,6 @@ button {
 /*** modal ***/
 
 dialog {
-	width: 340px;
-	height: 400px;
 	border-radius: 10px;
 	border: none;
 	visibility: hidden;
@@ -214,17 +212,22 @@ dialog.active {
 	transition: 0.3s 0.2s ease-out;
 }
 
+#modal-gallery {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 7px;
+}
+
 .modal-gallery {
+	width: 340px;
+	height: 300px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-}
-
-.modal-gallery h2 {
-	color: black;
-	font-size: 1.1em;
-	margin-top: -25px;
-	font-weight: 200;
+	padding: 40px;
 }
 
 .btn-close {
@@ -235,15 +238,50 @@ dialog.active {
 	cursor: pointer;
 }
 
+.modal-gallery h2 {
+	color: black;
+	font-size: 1.1em;
+	margin-top: -60px;
+	font-weight: 200;
+	padding-bottom: 15px;
+}
+
+.modal-gallery img {
+	width: 60px;
+	flex-wrap: wrap;
+	display: flex;
+	margin-bottom: -15px
+}
+
+.btn-delete {
+	background-color: white;
+	position: relative;
+	bottom: 72px;
+	left: 42px;
+	margin-bottom: -20px;
+	padding: 2px;
+	color: white;
+	background-color: black;
+	font-size: 0.7em;
+	border-radius: 2px;
+}
+
+.div-bar {
+	width: 100%;
+	margin-top: 30px;
+	border: #919191 solid 1px;
+}
+
 .btn-add {
 	background-color: #1D6154;
 	padding: 10px 50px 10px 50px;
+	width: 120px;
 	color: white;
 	font-size: 0.9em;
 	border: none;
 	border-radius: 50px;
 	position: relative;
-	top: 300px;
+	top: 35px;
 	text-decoration: none;
 }
 
@@ -268,7 +306,7 @@ dialog.active {
 }
 
 figure img {
-	transition: 1s 1s ease-in-out;
+	padding-bottom: 10px;
 }
 
 .btn-filters:hover {
@@ -335,6 +373,7 @@ nav a {
 	text-decoration: none;
 	color: black;
 	gap: 20px;
+	font-size: 1.1em;
 }
 
 li:hover {
