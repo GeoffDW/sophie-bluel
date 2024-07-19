@@ -165,7 +165,34 @@ const generateModalGallery = (works) => {
     });
   }
 }
++/**
++ * Supprime de manière asynchrone un travail en fonction de son ID.
++ *
++ * @param {number} id - L'ID du travail à supprimer.
++ */
+const deleteWork = async (id) => {
+  const token = localStorage.getItem("token");
+  
+  if (!token) {
+    alert("Vous devez être connecté pour supprimer un travail.");
+    return;
+  }
 
+  const response = await fetch(URL + 'works/' + id, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  if (response.ok) {
+    works = works.filter(work => work.id !== id);
+    generateWorks(works); 
+    generateModalGallery(works); 
+  } else {
+    alert("Erreur lors de la suppression du travail.");
+  }
+}
 
 const init = async () => {
   await fetchData("categories");
