@@ -266,6 +266,12 @@ dialog.active {
 	border-radius: 2px;
 }
 
+.btn-back {
+position: relative;
+right: 195px;
+bottom: 75px;
+}
+
 .div-bar {
 	width: 100%;
 	margin-top: 30px;
@@ -275,7 +281,6 @@ dialog.active {
 .btn-add {
 	background-color: #1D6154;
 	padding: 10px 50px 10px 50px;
-	width: 120px;
 	color: white;
 	font-size: 0.9em;
 	border: none;

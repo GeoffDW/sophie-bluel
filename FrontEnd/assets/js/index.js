@@ -16,6 +16,7 @@ const addButton = document.querySelector(".btn-add");
 const projetsGallery = document.querySelector(".gallery");
 const classFilters = document.querySelector('.filters');
 const modalGallery = document.getElementById("modal-gallery");
+const backButton = document.querySelector('.btn-back');
 
 
 // ********** VARIABLES *********** //
@@ -41,7 +42,7 @@ const fetchData = async (type) => {
 
 // ********* AFFICHAGE PROJETS  ********* //
 
-const generateWorks = (works) => {
+const generateWorks = () => {
   projetsGallery.innerHTML = ''; // Clear existing works
 
   for (let i = 0; i < works.length; i++) {
@@ -62,14 +63,14 @@ const generateWorks = (works) => {
 
 // ********* AFFICHAGE CATEGORIE ******** //
 
-const generateCategories = (categories) => {
+const generateCategories = () => {
   const allButton = document.createElement('button');
 
   allButton.innerText = "Tous";
   allButton.classList.add("btn-filters");
 
   allButton.addEventListener('click', () => {
-    generateWorks(works); 
+    generateWorks(works);
   });
 
   classFilters.appendChild(allButton);
@@ -107,7 +108,7 @@ const displayAdmin = () => {
     editMode.classList.remove("hide");
     editBtn.classList.remove("hide");
     classFilters.classList.add("hide");
-    
+
     loginBtn.classList.add("hide");
     logoutBtn.classList.remove("hide");
   } else {
@@ -137,7 +138,7 @@ const toggleModal = () => {
   showButton.addEventListener("click", () => {
     dialog.showModal();
     dialog.classList.toggle("active");
-    generateModalGallery(works);
+    generateModalGallery();
   });
 
   closeButton.addEventListener("click", () => {
@@ -146,7 +147,7 @@ const toggleModal = () => {
   });
 }
 
-const generateModalGallery = (works) => {
+const generateModalGallery = () => {
   modalGallery.innerHTML = ''; // Clear existing works
 
   for (let i = 0; i < works.length; i++) {
@@ -164,15 +165,16 @@ const generateModalGallery = (works) => {
 
     });
   }
+  document.querySelector(".btn-add").addEventListener("click", generateModalForm);
 }
-+/**
+/**
 + * Supprime de manière asynchrone un travail en fonction de son ID.
 + *
 + * @param {number} id - L'ID du travail à supprimer.
 + */
 const deleteWork = async (id) => {
   const token = localStorage.getItem("token");
-  
+
   if (!token) {
     alert("Vous devez être connecté pour supprimer un travail.");
     return;
@@ -187,19 +189,38 @@ const deleteWork = async (id) => {
 
   if (response.ok) {
     works = works.filter(work => work.id !== id);
-    generateWorks(works); 
-    generateModalGallery(works); 
+    generateWorks();
+    generateModalGallery();
   } else {
     alert("Erreur lors de la suppression du travail.");
   }
+}
+
+const generateModalForm = () => {
+  modalGallery.innerHTML = '';
+
+  document.querySelector(".modal-gallery h2").innerText = "Ajout photo";
+  backButton.classList.remove("hide");
+  document.querySelector(".btn-add").innerText = "Valider";
+
+  const titlePhoto = document.createElement("h2")
+
+  modalGallery.appendChild(titlePhoto);
+
+  backButton.addEventListener("click", () => {
+    generateModalGallery();
+
+    document.querySelector(".modal-gallery h2").innerText = "Gallerie photo";
+    backButton.classList.add("hide");
+  })
 }
 
 const init = async () => {
   await fetchData("categories");
   await fetchData("works");
 
-  generateWorks(works);
-  generateCategories(categories);
+  generateWorks();
+  generateCategories();
   displayAdmin()
   toggleModal();
 }
