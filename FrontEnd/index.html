@@ -72,6 +72,20 @@
 					<div id="modal-gallery"></div> <!-- Conteneur pour la galerie dans la modal -->
 					<div class="div-bar"></div>
 					<button class="btn-add">Ajouter une photo</button>
+					<form class="hide" action="#" method="post">
+						<i class="fa-regular fa-image"></i>
+						<input type="submit" value="+ Ajouter photo"><br>
+						<p class="hide">jpg, png : 4mo max</p>
+						<label for="name">Titre</label><br>
+						<input type="text" name="titre" id="titre"><br>
+						<label for="categories">Categorie</label><br>
+						<select name="categories" id="categories">
+							<option value="0"></option>
+							<option value="1">Objets</option>
+							<option value="2">Appartements</option>
+							<option value="3">Hotels & restaurants</option>
+						</select>
+					</form>
 				</section>
 			</dialog>
 

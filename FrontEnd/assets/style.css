@@ -241,6 +241,7 @@ dialog.active {
 .modal-gallery h2 {
 	color: black;
 	font-size: 1.1em;
+	font-family: work sans;
 	margin-top: -60px;
 	font-weight: 200;
 	padding-bottom: 15px;
@@ -270,12 +271,18 @@ dialog.active {
 position: relative;
 right: 195px;
 bottom: 75px;
+cursor: pointer;
 }
 
 .div-bar {
 	width: 100%;
 	margin-top: 30px;
 	border: #919191 solid 1px;
+}
+
+.div-bar.active {
+	position: relative;
+	top: 260px;
 }
 
 .btn-add {
@@ -288,6 +295,7 @@ bottom: 75px;
 	position: relative;
 	top: 35px;
 	text-decoration: none;
+	cursor: pointer;
 }
 
 .filters {
@@ -309,6 +317,85 @@ bottom: 75px;
 	cursor: pointer;
 	transition: 0.3s;
 }
+
+.modal-gallery form input, #categories{
+	display: flex;
+	justify-content: center;
+	flex-direction: column-reverse;
+	gap: 15px;
+	width: 300px;
+	margin: auto;
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.modal-gallery form {
+	margin-top: -52px;
+}
+
+.btn-add.active {
+	top: 280px;
+	background-color: #919191;
+	width: 160px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal-gallery input[type="submit"] {
+	background-color: #B9C5CC;
+	color: #306685;
+	font-family: work sans;
+	font-size: 0.7em;
+	position: relative;
+	bottom: 32px;
+	width: 120px;
+    height: 25px;
+	cursor: pointer;
+}
+
+dialog .fa-image {
+	position: absolute;
+	cursor: pointer;
+	background-color: #E8F1F6;
+	color: #B9C5CC;
+	width: 300px;
+	height: 120px;
+	font-size: 4em;
+	display: flex;
+	justify-content: center;
+	border-radius: 5px;
+	padding-top: 10px;
+	margin-top: 80px;
+    top: 0px;
+    margin-bottom: -20px;
+}
+
+.modal-gallery #titre, #categories {
+	width: 300px;
+	height: 40px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.modal-gallery #categories {
+	appearance: none;
+}
+
+.modal-gallery form label {
+	font-size: 0.8em;
+}
+
+.modal-gallery p {
+	font-size: 0.6em;
+	position: relative;
+	bottom: 40px;
+	left: 110px;
+	width: 50%;
+}
+
 
 figure img {
 	padding-bottom: 10px;

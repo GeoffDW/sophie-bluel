@@ -17,7 +17,10 @@ const projetsGallery = document.querySelector(".gallery");
 const classFilters = document.querySelector('.filters');
 const modalGallery = document.getElementById("modal-gallery");
 const backButton = document.querySelector('.btn-back');
-
+const formButton = document.querySelector("dialog form");
+const addImage = document.querySelector(".modal-gallery .test");
+const divBar = document.querySelector(".div-bar");
+const pPhoto = document.querySelector(".modal-gallery p");
 
 // ********** VARIABLES *********** //
 
@@ -176,7 +179,7 @@ const deleteWork = async (id) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
-    alert("Vous devez être connecté pour supprimer un travail.");
+    alert("Vous devez être connecté pour supprimer un projet.");
     return;
   }
 
@@ -201,19 +204,29 @@ const generateModalForm = () => {
 
   document.querySelector(".modal-gallery h2").innerText = "Ajout photo";
   backButton.classList.remove("hide");
+  formButton.classList.remove("hide");
+  addButton.classList.add("active");
+  divBar.classList.add("active");
+  pPhoto.classList.remove("hide");
+  
   document.querySelector(".btn-add").innerText = "Valider";
 
   const titlePhoto = document.createElement("h2")
-
   modalGallery.appendChild(titlePhoto);
 
   backButton.addEventListener("click", () => {
     generateModalGallery();
+    formButton.classList.add("hide");
+    document.querySelector(".btn-add").innerText = "Ajouter une photo";
+    addButton.classList.remove("active");
+    divBar.classList.remove("active");
+
 
     document.querySelector(".modal-gallery h2").innerText = "Gallerie photo";
     backButton.classList.add("hide");
   })
 }
+
 
 const init = async () => {
   await fetchData("categories");
