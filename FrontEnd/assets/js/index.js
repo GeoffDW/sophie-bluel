@@ -227,6 +227,54 @@ const generateModalForm = () => {
   })
 }
 
+const addProject = async (event) => {
+  event.preventDefault(); // Empêcher le rechargement de la page
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Vous devez être connecté pour ajouter un projet.");
+    return;
+  }
+
+  // Récupérer les valeurs des champs du formulaire
+  const title = document.getElementById('titre').value;
+  const category = document.getElementById('categories').value;
+  const image = document.querySelector('input[type="file"]').files[0];
+
+  // Créer un objet FormData pour envoyer les données
+  const formData = new FormData();
+  formData.append('title', title);
+  formData.append('category', category);
+  formData.append('image', image);
+
+  // Envoyer les données au serveur
+  const response = await fetch(URL + 'works/' + id, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+    body: formData
+  });
+
+  if (response.ok) {
+    const newWork = await response.json();
+    works.push(newWork); // Ajouter le nouveau projet à la liste
+    generateWorks(); // Mettre à jour la galerie de projets
+    generateModalGallery(); // Mettre à jour la galerie de la modal
+    alert("Projet ajouté avec succès.");
+  } else {
+    alert("Erreur lors de l'ajout du projet.");
+  }
+};
+
+// Attacher l'événement au bouton "Ajouter une photo"
+document.querySelector('.btn-add').addEventListener('click', () => {
+  document.querySelector('form').classList.toggle('hide');
+});
+
+addButton.addEventListener('submit', addProject);
+
 
 const init = async () => {
   await fetchData("categories");
