@@ -190,7 +190,7 @@ const deleteWork = async (id) => {
     return;
   }
 
-  const response = await fetch(URL + 'works/' + id, {
+  const response = await fetch(WORKS_URL + 'works/' + id, {
     method: 'DELETE',
     headers: {
       'Authorization': `Bearer ${token}`
