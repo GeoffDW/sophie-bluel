@@ -344,16 +344,26 @@ cursor: pointer;
 	justify-content: center;
 }
 
-.modal-gallery input[type="submit"] {
+.modal-gallery [type=file] {
+	display: none;
+}
+
+
+.modal-gallery [for=image] {
 	background-color: #B9C5CC;
 	color: #306685;
 	font-family: work sans;
 	font-size: 0.7em;
 	position: relative;
 	bottom: 32px;
+	left: 90px;
 	width: 120px;
     height: 25px;
 	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 20px;
 }
 
 dialog .fa-image {
@@ -396,6 +406,25 @@ dialog .fa-image {
 	width: 50%;
 }
 
+#previewImage {
+    height: 129px;
+    width: 100px;
+    object-fit: cover;
+    z-index: 1;
+    position: relative;
+    bottom: -18px;
+    left: 100px;
+    margin-top: -120px;
+}
+
+.btnGreen.active {
+	top: 280px;
+	background-color: #1D6154;
+	width: 160px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
 figure img {
 	padding-bottom: 10px;
@@ -630,4 +659,8 @@ footer nav ul {
 
 .hide {
 	display: none;
+}
+
+.hideTwo {
+	opacity: 0;
 }

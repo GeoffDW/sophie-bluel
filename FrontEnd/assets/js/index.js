@@ -2,7 +2,8 @@
 
 // ********** CONSTANTS *********** //
 
-const URL = "http://localhost:5678/api/";
+const BASE_URL = "http://localhost:5678/api/";
+const WORKS_URL = BASE_URL + "works";
 
 const dialog = document.querySelector("dialog");
 const editMode = document.querySelector('.mode-edition');
@@ -21,6 +22,12 @@ const formButton = document.querySelector("dialog form");
 const addImage = document.querySelector(".modal-gallery .test");
 const divBar = document.querySelector(".div-bar");
 const pPhoto = document.querySelector(".modal-gallery p");
+const faImage = document.querySelector("form i")
+const divForm = document.querySelector("form div");
+const btnImage = document.querySelector(".btnImage")
+const image = document.getElementById("previewImage");
+
+
 
 // ********** VARIABLES *********** //
 
@@ -34,7 +41,7 @@ Ce code définit une fonction appelée fetchData qui récupère des données en 
 * @param {string} type - The type of data to fetch.
  */
 const fetchData = async (type) => {
-  const response = await fetch(URL + type);
+  const response = await fetch(BASE_URL + type);
 
   if (type === "works") {
     works = await response.json();
@@ -226,54 +233,77 @@ const generateModalForm = () => {
     backButton.classList.add("hide");
   })
 }
+function previewImage(e) {
+  const input = e.target;
 
-const addProject = async (event) => {
-  event.preventDefault(); // Empêcher le rechargement de la page
-
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    alert("Vous devez être connecté pour ajouter un projet.");
-    return;
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        image.src = e.target.result;
+    }
+    reader.readAsDataURL(input.files[0]);
   }
 
-  // Récupérer les valeurs des champs du formulaire
-  const title = document.getElementById('titre').value;
-  const category = document.getElementById('categories').value;
-  const image = document.querySelector('input[type="file"]').files[0];
+  divForm.classList.remove("hide");
+  btnImage.classList.add("hideTwo");
+  addButton.classList.add("active");
+  addButton.classList.add("btnGreen");
 
-  // Créer un objet FormData pour envoyer les données
+}
+
+document.getElementById("imageInput").addEventListener('change', previewImage)
+
+const fileInput = document.getElementById('image');
+const previewContainer = document.getElementById('image-preview-container');
+const uploadForm = document.getElementById('upload-form');
+
+// Fonction pour envoyer les données
+async function sendFormData() {
   const formData = new FormData();
-  formData.append('title', title);
-  formData.append('category', category);
-  formData.append('image', image);
+  formData.append('image', fileInput.files[0]);
+  formData.append('titre', document.getElementById('titre').value);
+  formData.append('categories', document.getElementById('categories').value);
 
-  // Envoyer les données au serveur
-  const response = await fetch(URL + 'works/' + id, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
-    body: formData
-  });
+  const token = localStorage.getItem('token'); // Récupère le token depuis le local storage
 
-  if (response.ok) {
-    const newWork = await response.json();
-    works.push(newWork); // Ajouter le nouveau projet à la liste
-    generateWorks(); // Mettre à jour la galerie de projets
-    generateModalGallery(); // Mettre à jour la galerie de la modal
-    alert("Projet ajouté avec succès.");
-  } else {
-    alert("Erreur lors de l'ajout du projet.");
+  try {
+    const response = await fetch(WORKS_URL, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Erreur lors de la requête: ' + response.status);
+    }
+
+    const data = await response.json();
+    console.log('Réponse de l\'API :', data);
+
+    // Ajouter l'image à la galerie
+    const newImage = document.createElement('img');
+    newImage.src = BASE_URL.createObjectURL(fileInput.files[0]);
+    newImage.alt = document.getElementById('titre').value;
+
+    modalGallery.appendChild(newImage);
+
+    // Réinitialiser le formulaire après l'ajout
+    uploadForm.reset();
+    image.src = '';
+    previewContainer.classList.add('hide');
+
+  } catch (error) {
+    console.error('Erreur lors de l\'envoi du formulaire :', error);
   }
-};
+}
 
-// Attacher l'événement au bouton "Ajouter une photo"
-document.querySelector('.btn-add').addEventListener('click', () => {
-  document.querySelector('form').classList.toggle('hide');
+// Événement pour envoyer les données lorsque le bouton "Ajouter une photo" est cliqué
+addButton.addEventListener('click', (event) => {
+  event.preventDefault(); // Empêche le rechargement de la page
+  sendFormData();
 });
-
-addButton.addEventListener('submit', addProject);
 
 
 const init = async () => {

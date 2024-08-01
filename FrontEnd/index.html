@@ -71,10 +71,14 @@
 					<button class="btn-back hide"><i class="fa-solid fa-arrow-left"></i></button>
 					<div id="modal-gallery"></div> <!-- Conteneur pour la galerie dans la modal -->
 					<div class="div-bar"></div>
-					<button class="btn-add">Ajouter une photo</button>
-					<form class="hide" action="#" method="post">
+					<button class="btn-add" id="btn-add">Ajouter une photo</button>
+					<form class="hide" id="imageInput" enctype="multipart/form-data" method="post">
+						<div id="image-preview-container" class="hide">
+							<img id="previewImage">
+						</div>
+						<input type="file" id="image" accept="image/png, image/jpeg"><br>
 						<i class="fa-regular fa-image"></i>
-						<input type="submit" value="+ Ajouter photo"><br>
+						<label class="btnImage" for="image" aria-label="image">+ Ajouter photo</label><br>
 						<p class="hide">jpg, png : 4mo max</p>
 						<label for="name">Titre</label><br>
 						<input type="text" name="titre" id="titre"><br>
