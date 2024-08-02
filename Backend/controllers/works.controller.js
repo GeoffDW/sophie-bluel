@@ -7,6 +7,8 @@ exports.findAll = async (req, res) =>  {
 }
 
 exports.create = async (req, res) => {
+	console.log('1', typeof req.body.title, req.body.title);
+	console.log('2', typeof req.body.category, req.body.category);
 	const host = req.get('host');
 	const title = req.body.title;
 	const categoryId = req.body.category;

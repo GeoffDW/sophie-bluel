@@ -175,7 +175,7 @@ const generateModalGallery = () => {
 
     });
   }
-  document.querySelector(".btn-add").addEventListener("click", generateModalForm);
+  addButton.addEventListener("click", generateModalForm);
 }
 /**
 + * Supprime de manière asynchrone un travail en fonction de son ID.
@@ -190,7 +190,7 @@ const deleteWork = async (id) => {
     return;
   }
 
-  const response = await fetch(WORKS_URL + 'works/' + id, {
+  const response = await fetch(WORKS_URL + id, {
     method: 'DELETE',
     headers: {
       'Authorization': `Bearer ${token}`
@@ -209,14 +209,16 @@ const deleteWork = async (id) => {
 const generateModalForm = () => {
   modalGallery.innerHTML = '';
 
+  const submitButton = addButton;
+
   document.querySelector(".modal-gallery h2").innerText = "Ajout photo";
   backButton.classList.remove("hide");
   formButton.classList.remove("hide");
-  addButton.classList.add("active");
+  submitButton.classList.add("active");
   divBar.classList.add("active");
   pPhoto.classList.remove("hide");
   
-  document.querySelector(".btn-add").innerText = "Valider";
+  submitButton.innerText = "Valider";
 
   const titlePhoto = document.createElement("h2")
   modalGallery.appendChild(titlePhoto);
@@ -224,16 +226,26 @@ const generateModalForm = () => {
   backButton.addEventListener("click", () => {
     generateModalGallery();
     formButton.classList.add("hide");
-    document.querySelector(".btn-add").innerText = "Ajouter une photo";
-    addButton.classList.remove("active");
+    submitButton.innerText = "Ajouter une photo";
+    submitButton.classList.remove("active");
     divBar.classList.remove("active");
 
 
     document.querySelector(".modal-gallery h2").innerText = "Gallerie photo";
     backButton.classList.add("hide");
   })
+
+document.getElementById("imageInput").addEventListener('change', previewImage)
+
+  // Événement pour envoyer les données lorsque le bouton "Ajouter une photo" est cliqué
+submitButton.addEventListener('click', (event) => {
+  event.preventDefault(); // Empêche le rechargement de la page
+  sendFormData();
+});
 }
+
 function previewImage(e) {
+  const submitButton = addButton;
   const input = e.target;
 
   if (input.files && input.files[0]) {
@@ -246,18 +258,16 @@ function previewImage(e) {
 
   divForm.classList.remove("hide");
   btnImage.classList.add("hideTwo");
-  addButton.classList.add("active");
-  addButton.classList.add("btnGreen");
-
+  submitButton.classList.add("active");
+  submitButton.classList.add("btnGreen");
 }
-
-document.getElementById("imageInput").addEventListener('change', previewImage)
 
 const fileInput = document.getElementById('image');
 const previewContainer = document.getElementById('image-preview-container');
 const uploadForm = document.getElementById('upload-form');
 
 // Fonction pour envoyer les données
+
 async function sendFormData() {
   const formData = new FormData();
   formData.append('image', fileInput.files[0]);
@@ -265,14 +275,21 @@ async function sendFormData() {
   formData.append('categories', document.getElementById('categories').value);
 
   const token = localStorage.getItem('token'); // Récupère le token depuis le local storage
+  console.log(typeof fileInput.files[0], fileInput.files[0])
+  console.log(typeof document.getElementById('titre').value, document.getElementById('titre').value)
+
+  console.log(typeof document.getElementById('categories').value, document.getElementById('categories').value)
+  console.log(typeof token, token)
 
   try {
     const response = await fetch(WORKS_URL, {
-      method: 'POST',
-      body: formData,
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        'Authorization': `Bearer ${token}`,
+        "Content-Type": "multipart/form-data"
+      },
+      method: 'POST',
+      body: formData
+      
     });
 
     if (!response.ok) {
@@ -290,7 +307,7 @@ async function sendFormData() {
     modalGallery.appendChild(newImage);
 
     // Réinitialiser le formulaire après l'ajout
-    uploadForm.reset();
+    // uploadForm.reset();
     image.src = '';
     previewContainer.classList.add('hide');
 
@@ -298,12 +315,6 @@ async function sendFormData() {
     console.error('Erreur lors de l\'envoi du formulaire :', error);
   }
 }
-
-// Événement pour envoyer les données lorsque le bouton "Ajouter une photo" est cliqué
-addButton.addEventListener('click', (event) => {
-  event.preventDefault(); // Empêche le rechargement de la page
-  sendFormData();
-});
 
 
 const init = async () => {
