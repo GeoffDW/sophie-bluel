@@ -142,13 +142,11 @@ table {
 	display: flex;
 	justify-content: center;
 	background-color: black;
-	width: 130%;
-	position: relative;
-	right: 189px;
 	color: white;
 	height: 50px;
 	align-items: center;
 }
+
 
 
 .mode-edition i {
@@ -223,7 +221,6 @@ dialog.active {
 
 .modal-gallery {
 	width: 340px;
-	height: 300px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -277,7 +274,8 @@ cursor: pointer;
 .div-bar {
 	width: 100%;
 	margin-top: 30px;
-	border: #919191 solid 1px;
+	height: 0.1px;
+    background-color: grey;
 }
 
 .div-bar.active {
@@ -437,16 +435,23 @@ figure img {
 }
 
 body {
-	max-width: 1140px;
-	margin: auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
+}
+
+header, 
+main {
+	max-width: 1140px;
+}
+
+main {
+	margin: auto;
 }
 
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px auto;
 }
 
 section {

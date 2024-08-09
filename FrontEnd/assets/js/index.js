@@ -53,7 +53,7 @@ const fetchData = async (type) => {
 // ********* AFFICHAGE PROJETS  ********* //
 
 const generateWorks = () => {
-  projetsGallery.innerHTML = ''; // Clear existing works
+  projetsGallery.innerHTML = '';
 
   for (let i = 0; i < works.length; i++) {
     const figure = works[i];
@@ -270,24 +270,30 @@ const uploadForm = document.getElementById('imageInput');
 
 const sendFormData = () => {
   const formData = new FormData();
+
   formData.append("title", document.getElementById('titre').value);
   formData.append("category", document.getElementById('categories').value);
   formData.append("image", fileInput.files[0]);
+
   const token = localStorage.getItem("token");
+
   fetch(WORKS_URL, {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${token}`,
     },
     body: formData,
+
   })
     .then(async (response) => {
       if (response.ok) {
         const newWork = await response.json();
+        
         works.push(newWork);
         generateWorks();
       }
     })
+
     .catch((error) => {
       console.error(error);
     });
