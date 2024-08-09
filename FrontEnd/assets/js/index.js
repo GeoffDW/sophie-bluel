@@ -3,7 +3,7 @@
 // ********** CONSTANTS *********** //
 
 const BASE_URL = "http://localhost:5678/api/";
-const WORKS_URL = BASE_URL + "works";
+const WORKS_URL = BASE_URL + "works/";
 
 const dialog = document.querySelector("dialog");
 const editMode = document.querySelector('.mode-edition');
@@ -264,56 +264,49 @@ function previewImage(e) {
 
 const fileInput = document.getElementById('image');
 const previewContainer = document.getElementById('image-preview-container');
-const uploadForm = document.getElementById('upload-form');
+const uploadForm = document.getElementById('imageInput');
 
 // Fonction pour envoyer les données
 
-async function sendFormData() {
+const sendFormData = () => {
   const formData = new FormData();
-  formData.append('image', fileInput.files[0]);
-  formData.append('titre', document.getElementById('titre').value);
-  formData.append('categories', document.getElementById('categories').value);
-
-  const token = localStorage.getItem('token'); // Récupère le token depuis le local storage
-  console.log(typeof fileInput.files[0], fileInput.files[0])
-  console.log(typeof document.getElementById('titre').value, document.getElementById('titre').value)
-
-  console.log(typeof document.getElementById('categories').value, document.getElementById('categories').value)
-  console.log(typeof token, token)
-
-  try {
-    const response = await fetch(WORKS_URL, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        "Content-Type": "multipart/form-data"
-      },
-      method: 'POST',
-      body: formData
-      
+  formData.append("title", document.getElementById('titre').value);
+  formData.append("category", document.getElementById('categories').value);
+  formData.append("image", fileInput.files[0]);
+  const token = localStorage.getItem("token");
+  fetch(WORKS_URL, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    },
+    body: formData,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        const newWork = await response.json();
+        works.push(newWork);
+        generateWorks();
+      }
+    })
+    .catch((error) => {
+      console.error(error);
     });
+};
 
-    if (!response.ok) {
-      throw new Error('Erreur lors de la requête: ' + response.status);
-    }
+function addImageToGallery(fileInput, title) {
+  const newFigure = document.createElement('figure');
 
-    const data = await response.json();
-    console.log('Réponse de l\'API :', data);
+  const newImage = document.createElement('img');
+  newImage.src = BASE_URL.createObjectURL(fileInput.files[0]);
+  newImage.alt = title;
 
-    // Ajouter l'image à la galerie
-    const newImage = document.createElement('img');
-    newImage.src = BASE_URL.createObjectURL(fileInput.files[0]);
-    newImage.alt = document.getElementById('titre').value;
+  const newFigcaption = document.createElement('figcaption');
+  newFigcaption.textContent = title;
 
-    modalGallery.appendChild(newImage);
+  newFigure.appendChild(newImage);
+  newFigure.appendChild(newFigcaption);
 
-    // Réinitialiser le formulaire après l'ajout
-    // uploadForm.reset();
-    image.src = '';
-    previewContainer.classList.add('hide');
-
-  } catch (error) {
-    console.error('Erreur lors de l\'envoi du formulaire :', error);
-  }
+  modalGallery.appendChild(newFigure);
 }
 
 
