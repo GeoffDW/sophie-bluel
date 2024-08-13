@@ -255,18 +255,41 @@ function previewImage(e) {
     }
     reader.readAsDataURL(input.files[0]);
   }
-
   divForm.classList.remove("hide");
   btnImage.classList.add("hideTwo");
-  submitButton.classList.add("active");
-  submitButton.classList.add("btnGreen");
 }
 
 const fileInput = document.getElementById('image');
 const previewContainer = document.getElementById('image-preview-container');
 const uploadForm = document.getElementById('imageInput');
 
-// Fonction pour envoyer les données
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const titreInput = document.getElementById('titre');
+  const categorieSelect = document.getElementById('categories');
+  const validateBtn = addButton;
+
+  const updateButtonState = () => {
+
+      // Vérifie si le champ "Titre" est rempli
+      const isTitreFilled = titreInput.value.trim() !== '';
+
+      // Vérifie si une catégorie autre que la valeur par défaut (0) est sélectionnée
+      const isCategorieSelected = categorieSelect.value !== '0';
+
+      // Active la classe "btn-green" si les deux champs sont remplis
+      if (isTitreFilled && isCategorieSelected) {
+          validateBtn.classList.add('btnGreen');
+      } else {
+          validateBtn.classList.remove('btnGreen');
+      }
+  }
+
+  // Ajoute des écouteurs d'événements sur les champs pour surveiller les changements
+  titreInput.addEventListener('input', updateButtonState);
+  categorieSelect.addEventListener('change', updateButtonState);
+});
 
 const sendFormData = () => {
   const formData = new FormData();
