@@ -1,4 +1,4 @@
-"use strict"; // Evite d'écrire du code trop ancien (anterieur au ES5 2009)
+"use strict";
 
 // ********** CONSTANTES *********** //
 
@@ -25,7 +25,6 @@ const error = document.querySelector('#error');
  */
 const login = async () => {
     console.log('hello login')
-    // Créer un objet options avec la méthode de requête, les en-têtes et le corps
     const options = {
         method: "POST", 
         headers: { "Content-Type": "application/json" },
@@ -35,10 +34,8 @@ const login = async () => {
         })
     };
 
-    // Envoyer une requête au serveur et afficher la réponse dans la console
     const response = await fetch(URL, options);
 
-    // Si la requête a réussi, extraire le jeton de la réponse et l'enregistrer dans le stockage local
     if (response.ok) {
         const data = await response.json();
         const token = data.token;
@@ -46,11 +43,9 @@ const login = async () => {
         localStorage.setItem("token", token);
         document.location.href = "index.html";
 
-    // Si la requête a échoué, lève une erreur avec le message "Identifiant ou mot de passe incorrect"
     } else {
-        throw new Error("Identifiant ou mot de passe incorrect");
+        throw alert("Identifiant ou mot de passe incorrect");
     }
-
 }
 
 // ********** MAIN *********** //

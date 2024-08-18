@@ -52,9 +52,10 @@ const fetchData = async (type) => {
 
 // ********* AFFICHAGE PROJETS  ********* //
 
-const generateWorks = () => {
+const generateWorks = (works) => {
   projetsGallery.innerHTML = '';
 
+  console.log(works)
   for (let i = 0; i < works.length; i++) {
     const figure = works[i];
 
@@ -93,7 +94,6 @@ const generateCategories = () => {
     btnFiltrer.innerText = category.name;
     btnFiltrer.classList.add("btn-filters");
 
-    // Add event listener to filter buttons
     btnFiltrer.addEventListener('click', () => {
       filterWorks(category.id);
     });
@@ -106,13 +106,17 @@ const generateCategories = () => {
  *
  * @param {number} categoryId - L'ID de la catégorie pour filtrer les œuvres.
  */
-const filterWorks = (categoryId) => {
+function filterWorks(categoryId) {
   const filteredWorks = works.filter(work => work.categoryId === categoryId);
+  console.log(filteredWorks)
   generateWorks(filteredWorks);
 }
 
 // ******** LOGIN - LOGOUT  ******** //
-
+/**
+ * Affiche ou masque les éléments liés à l'administration en fonction de la présence d'un jeton dans le stockage local.
+ *
+ */
 const displayAdmin = () => {
   if (localStorage.getItem("token")) {
     editMode.classList.remove("hide");
@@ -131,6 +135,11 @@ const displayAdmin = () => {
   }
 };
 
+/**
+ * Déconnecte l'utilisateur en supprimant le jeton de stockage local,
+ * mettant à jour l'état displayAdmin, et rechargeant la page.
+ *
+ */
 const logout = () => {
   localStorage.removeItem("token");
   displayAdmin()
@@ -139,10 +148,13 @@ const logout = () => {
 
 logoutBtn.addEventListener("click", logout);
 
+
 // ******** MODALS ********* //
 
+
 /**
- * Toggles the visibility of a modal dialog.
+ * Bascule la visibilité d'une boîte de dialogue modale.
+ *
  */
 const toggleModal = () => {
   showButton.addEventListener("click", () => {
@@ -157,8 +169,16 @@ const toggleModal = () => {
   });
 }
 
+
+/**
++ * Génère la galerie modale en effaçant les œuvres existantes et en ajoutant de nouvelles éléments de galerie
++ * pour chaque œuvre dans le tableau works. Chaque élément de galerie contient une image et un bouton de suppression.
++ * En cliquant sur le bouton de suppression, la fonction deleteWork est déclenchée avec l'identifiant correspondant de l'œuvre.
++ * Enfin, ajoute un écouteur d'événement de clic à l'élément addButton pour déclencher la fonction generateModalForm.
++ *
++ */
 const generateModalGallery = () => {
-  modalGallery.innerHTML = ''; // Clear existing works
+  modalGallery.innerHTML = '';
 
   for (let i = 0; i < works.length; i++) {
     const figure = works[i];
@@ -177,6 +197,8 @@ const generateModalGallery = () => {
   }
   addButton.addEventListener("click", generateModalForm);
 }
+
+
 /**
 + * Supprime de manière asynchrone un travail en fonction de son ID.
 + *
@@ -199,13 +221,18 @@ const deleteWork = async (id) => {
 
   if (response.ok) {
     works = works.filter(work => work.id !== id);
-    generateWorks();
+    generateWorks(works);
     generateModalGallery();
   } else {
     alert("Erreur lors de la suppression du travail.");
   }
 }
 
+
+/**
+ * Génère un formulaire modal pour ajouter une photo.
+ *
+ */
 const generateModalForm = () => {
   modalGallery.innerHTML = '';
 
@@ -217,7 +244,7 @@ const generateModalForm = () => {
   submitButton.classList.add("active");
   divBar.classList.add("active");
   pPhoto.classList.remove("hide");
-  
+
   submitButton.innerText = "Valider";
 
   const titlePhoto = document.createElement("h2")
@@ -225,25 +252,30 @@ const generateModalForm = () => {
 
   backButton.addEventListener("click", () => {
     generateModalGallery();
+
     formButton.classList.add("hide");
     submitButton.innerText = "Ajouter une photo";
     submitButton.classList.remove("active");
     divBar.classList.remove("active");
 
-
     document.querySelector(".modal-gallery h2").innerText = "Gallerie photo";
     backButton.classList.add("hide");
   })
 
-document.getElementById("imageInput").addEventListener('change', previewImage)
+  document.getElementById("imageInput").addEventListener('change', previewImage)
 
-  // Événement pour envoyer les données lorsque le bouton "Ajouter une photo" est cliqué
-submitButton.addEventListener('click', (event) => {
-  event.preventDefault(); // Empêche le rechargement de la page
-  sendFormData();
-});
+  submitButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    sendFormData();
+  });
 }
 
+
+/**
+ * Affiche une image sélectionnée par l'utilisateur.
+ *
+ * @param {Event} e - L'objet d'événement représentant l'événement de changement de fichier.
+ */
 function previewImage(e) {
   const submitButton = addButton;
   const input = e.target;
@@ -251,7 +283,7 @@ function previewImage(e) {
   if (input.files && input.files[0]) {
     const reader = new FileReader();
     reader.onload = function (e) {
-        image.src = e.target.result;
+      image.src = e.target.result;
     }
     reader.readAsDataURL(input.files[0]);
   }
@@ -270,27 +302,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const categorieSelect = document.getElementById('categories');
   const validateBtn = addButton;
 
+
+  /**
+   * Met à jour l'état du bouton en fonction des champs d'entrée.
+   *
+   */
   const updateButtonState = () => {
+    const isTitreFilled = titreInput.value.trim() !== '';
 
-      // Vérifie si le champ "Titre" est rempli
-      const isTitreFilled = titreInput.value.trim() !== '';
+    const isCategorieSelected = categorieSelect.value !== '0';
 
-      // Vérifie si une catégorie autre que la valeur par défaut (0) est sélectionnée
-      const isCategorieSelected = categorieSelect.value !== '0';
-
-      // Active la classe "btn-green" si les deux champs sont remplis
-      if (isTitreFilled && isCategorieSelected) {
-          validateBtn.classList.add('btnGreen');
-      } else {
-          validateBtn.classList.remove('btnGreen');
-      }
+    if (isTitreFilled && isCategorieSelected) {
+      validateBtn.classList.add('btnGreen');
+    } else {
+      validateBtn.classList.remove('btnGreen');
+    }
   }
 
-  // Ajoute des écouteurs d'événements sur les champs pour surveiller les changements
   titreInput.addEventListener('input', updateButtonState);
   categorieSelect.addEventListener('change', updateButtonState);
 });
 
+
+/**
+ * Envoie les données du formulaire au serveur pour créer une nouvelle œuvre.
+ *
+ */
 const sendFormData = () => {
   const formData = new FormData();
 
@@ -300,28 +337,40 @@ const sendFormData = () => {
 
   const token = localStorage.getItem("token");
 
+  console.log(typeof formData.get("category"), formData.get("category"));
+  if (formData.get("title") && formData.get("category") !== "0" && formData.get("image") && token) {
+
   fetch(WORKS_URL, {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${token}`,
     },
     body: formData,
-
   })
+
     .then(async (response) => {
       if (response.ok) {
         const newWork = await response.json();
-        
         works.push(newWork);
-        generateWorks();
+        console.log(works)
+        // generateWorks(works);
       }
     })
 
     .catch((error) => {
       console.error(error);
     });
+  }
 };
 
+
+
+/**
+ * Ajoute une nouvelle image à la galerie avec le titre fourni.
+ *
+ * @param {object} fileInput - L'élément d'entrée contenant le fichier image.
+ * @param {string} title - Le titre à afficher pour l'image.
+ */
 function addImageToGallery(fileInput, title) {
   const newFigure = document.createElement('figure');
 
@@ -339,11 +388,16 @@ function addImageToGallery(fileInput, title) {
 }
 
 
+/**
+ * Initialise l'application en récupérant les données, en générant les travaux et les catégories,
+ * et en activant la modale.
+ *
+ */
 const init = async () => {
   await fetchData("categories");
   await fetchData("works");
 
-  generateWorks();
+  generateWorks(works);
   generateCategories();
   displayAdmin()
   toggleModal();
